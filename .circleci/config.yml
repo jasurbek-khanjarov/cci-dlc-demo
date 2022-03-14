@@ -1,10 +1,11 @@
-version: 2.1
+version: 2
 jobs:
- build:
-    docker:
-      - image: cimg/base:stable
+  build_elixir:
+    machine:
+      image: ubuntu-2004:202104-01
+      docker_layer_caching: true
     steps:
       - checkout
-      - setup_remote_docker:
-          docker_layer_caching: true # DLC will explicitly cache layers here and try to avoid rebuilding.
-      - run: docker build -t getting-started .
+      - run:
+          name: build Elixir image
+          command: docker build -t circleci/elixir:example .
