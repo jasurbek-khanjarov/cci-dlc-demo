@@ -1,10 +1,8 @@
 version: 2.1
-orbs:
-  browser-tools: circleci/browser-tools@1.2.3
 jobs:
  build:
     docker:
-      - image: cimg/node:17.2-browsers # DLC does nothing here, its caching depends on commonality of the image layers.
+      - image: cimg/base:stable
         auth:
           username: mydockerhub-user
           password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
@@ -12,4 +10,4 @@ jobs:
       - checkout
       - setup_remote_docker:
           docker_layer_caching: true # DLC will explicitly cache layers here and try to avoid rebuilding.
-      - run: docker build -t getting-started .
+      - run: docker build .
